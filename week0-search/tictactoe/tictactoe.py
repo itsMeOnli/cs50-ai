@@ -100,11 +100,11 @@ def terminal(board):
     """
     Returns True if game is over, False otherwise.
     """
-    available_actions = actions(board)
     if winner(board) is not None:
         return True
-    if bool(available_actions) == False:
-        return False
+    if not actions(board):
+        return True
+    return False
 
 
 def utility(board) -> float:
