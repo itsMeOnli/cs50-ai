@@ -55,45 +55,27 @@ def result(board, action):
     newboard[i][j]=player(board)
     return newboard
 
-#CAN BE BETTER
+
 def winner(board):
     """
     Returns the winner of the game, if there is one.
     """
-    winner = None
-    for i in range(3):
-        c=0
-        # checking row
-        for j in range(3):
-            if board[i][j] == EMPTY:
-                break
-            if c == 3:
-                winner = X
-                break
-            if board[i][j] == X:
-                c+=1
-        else:
-            winner=O
-        # checking columns
-        c=0
-        for j in range(3):
-            if board[j][i] == EMPTY:
-                break
-            if c == 3:
-                winner = X
-                break
-            if board[j][i] == X:
-                c+=1
-        else:
-            winner=O
-    
-    #checking diagonals
-    if board[0][0] == board[1][1] and board[1][1] == board[2][2] and board[0][0] is not None:
-        return board[0][0]
-    if board[2][0] == board[1][1] and board[1][1] == board[0][2] and board[1][1] is not None:
-        return board[1][1]
+    lines = []
 
-    return winner
+    lines.extend(board)
+
+    lines.extend([[board[r][c] for r in range(3)] for c in range(3)])
+
+    lines.append([board[0][0], board[1][1], board[2][2]])
+    lines.append([board[0][2], board[1][1], board[2][0]])
+
+    for line in lines:
+        if line == [X, X, X]:
+            return X
+        if line == [O, O, O]:
+            return O
+
+    return None
 
 
 def terminal(board):
