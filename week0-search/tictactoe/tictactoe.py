@@ -55,6 +55,7 @@ def result(board, action):
     newboard[i][j]=player(board)
     return newboard
 
+#CAN BE BETTER
 def winner(board):
     """
     Returns the winner of the game, if there is one.
@@ -99,8 +100,11 @@ def terminal(board):
     """
     Returns True if game is over, False otherwise.
     """
-    # if actions set is empty then draw
-    raise NotImplementedError
+    available_actions = actions(board)
+    if winner(board) is not None:
+        return True
+    if bool(available_actions) == False:
+        return False
 
 
 def utility(board):
