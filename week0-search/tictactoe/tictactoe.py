@@ -107,7 +107,7 @@ def terminal(board):
         return False
 
 
-def utility(board):
+def utility(board) -> float:
     """
     Returns 1 if X has won the game, -1 if O has won, 0 otherwise.
     """
@@ -124,4 +124,57 @@ def minimax(board):
     """
     Returns the optimal action for the current player on the board.
     """
-    raise NotImplementedError
+    if terminal(board):
+        return None
+
+    current = player(board)
+
+    if current == X:
+
+        best_score = -math.inf
+        best_action = None
+
+        for action in actions(board):
+            score = minPlayer(result(board, action))
+
+            if score > best_score:
+                best_score = score
+                best_action = action
+
+        return best_action
+
+    else:
+
+        best_score = math.inf
+        best_action = None
+
+        for action in actions(board):
+            score = maxPlayer(result(board, action))
+
+            if score < best_score:
+                best_score = score
+                best_action = action
+
+        return best_action
+
+def maxPlayer(board) -> float:
+    """
+    Returns the maximum score that can be achieved
+    """
+    if terminal(board):
+        return utility(board)
+    score = -math.inf
+    for action in actions(board):
+        score= max(score, minPlayer(result(board,action)))
+    return score
+
+def minPlayer(board) -> float:
+    """
+    Returns the maximum score that can be achieved
+    """
+    if terminal(board):
+        return utility(board)
+    score = math.inf
+    for action in actions(board):
+        score= min(score, maxPlayer(result(board,action)))
+    return score
