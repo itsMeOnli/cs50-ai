@@ -108,6 +108,9 @@ def minimax(board):
     """
     if terminal(board):
         return None
+    
+    if board == initial_state():
+        return (1, 1)
 
     current = player(board)
 
