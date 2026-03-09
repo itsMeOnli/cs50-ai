@@ -50,6 +50,8 @@ def result(board, action):
     """
     newboard = copy.deepcopy(board)
     i,j = action
+    if i < 0 or j < 0 or i > 2 or j > 2:
+        raise ValueError
     if newboard[i][j] is not EMPTY:
         raise ValueError
     newboard[i][j]=player(board)
