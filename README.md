@@ -68,7 +68,7 @@ cs50-ai/
 
 Progress: 0 / 6 weeks completed
 
-- [/] Week 0 — Search
+- [x] Week 0 — Search
 - [ ] Week 1 — Knowledge
 - [ ] Week 2 — Uncertainty
 - [ ] Week 3 — Optimization
