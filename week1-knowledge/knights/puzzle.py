@@ -59,47 +59,48 @@ knowledge2 = And(
 # B says "A said 'I am a knave'."
 # B says "C is a knave."
 # C says "A is a knight."
+ASaidKnight = Symbol("A said I am a Knight")
+ASaidKnave = Symbol("A said I am a Knave")
 knowledge3 = And(
+    # A said exactly one
+    Or(ASaidKnight, ASaidKnave),
+    Not(And(ASaidKnight, ASaidKnave)),
 
-    Or(
-        #A said Im knight
-        Implication(AKnight,AKnight),
-        Implication(Not(AKnight),AKnave),
+    # If A said "I am a knight"
+    Implication(ASaidKnight, And(
+        Implication(AKnight, AKnight),
+        Implication(AKnave, Not(AKnight))
+    )),
 
-        #A said Im Knave
-        Implication(AKnave,AKnight),
-        Implication(Not(AKnave),AKnave),
-    ),
+    # If A said "I am a knave"
+    Implication(ASaidKnave, And(
+        Implication(AKnight, AKnave),
+        Implication(AKnave, Not(AKnave))
+    )),
 
-    #B statements
+    # B: "A said 'I am a knave'"
+    Implication(BKnight, ASaidKnave),
+    Implication(BKnave, Not(ASaidKnave)),
 
-    Implication(
-        Or(
-            Implication(AKnave,AKnight),
-            Implication(Not(AKnave),AKnave)
-        ),
-        BKnight
-        ),
-    Implication(
-        Not(
-            Or(
-            Implication(AKnave,AKnight),
-            Implication(Not(AKnave),AKnave),
-            )
-        ),
-        BKnave
-        ),
+    # B: "C is a knave"
+    Implication(BKnight, CKnave),
+    Implication(BKnave, Not(CKnave)),
 
-    Implication(CKnave,BKnight),
-    Implication(Not(CKnave),BKnave),
+    # C: "A is a knight"
+    Implication(CKnight, AKnight),
+    Implication(CKnave, Not(AKnight)),
 
-    #C statement
-    Implication(AKnight,CKnight),
-    Implication(Not(AKnight),CKnave),
 
-    Or(AKnave, AKnight),
-    Or(BKnave, BKnight),
-    Or(CKnave, CKnight)
+    #Either
+    Or(AKnight, AKnave),
+    Not(And(AKnight, AKnave)),
+
+    Or(BKnight, BKnave),
+    Not(And(BKnight, BKnave)),
+
+    Or(CKnight, CKnave),
+    Not(And(CKnight, CKnave)),
+
 )
 
 
