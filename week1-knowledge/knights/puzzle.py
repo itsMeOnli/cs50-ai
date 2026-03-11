@@ -20,24 +20,40 @@ knowledge0 = And(
 # Puzzle 1
 # A says "We are both knaves."
 # B says nothing.
+both=And(AKnave,BKnave)
 knowledge1 = And(
-    Implication(And(AKnave,BKnave), AKnight),
-    Implication(Not(And(AKnave,BKnave)), AKnave),
-    Or(AKnave, AKnight)
+    Implication(AKnight, both),
+    Implication(AKnave, Not(both)),
+
+    Or(AKnave, AKnight),
+    Not(And(AKnight, AKnave)),
+
+    Or(BKnight, BKnave),
+    Not(And(BKnight, BKnave)),
 )
 
 # Puzzle 2
 # A says "We are the same kind."
 # B says "We are of different kinds."
-knowledge2 = And(
-    Implication(Or(And(AKnave,BKnave),And(AKnight,BKnight)), AKnight),
-    Implication(Not(Or(And(AKnave,BKnave),And(AKnight,BKnight))), AKnave),
-    Implication(Or(And(AKnave,BKnight),And(AKnight,BKnave)), BKnight),
-    Implication(Not(Or(And(AKnave,BKnight),And(AKnight,BKnave))), BKnave),
-    Or(AKnave, AKnight),
-    Or(BKnave, BKnight)
-)
+same = Or(And(AKnight, BKnight), And(AKnave, BKnave))
+different = Or(And(AKnight, BKnave), And(AKnave, BKnight))
 
+knowledge2 = And(
+    # A's statement
+    Implication(AKnight, same),
+    Implication(AKnave, Not(same)),
+
+    # B's statement
+    Implication(BKnight, different),
+    Implication(BKnave, Not(different)),
+
+    Or(AKnight, AKnave),
+    Not(And(AKnight, AKnave)),
+
+    Or(BKnight, BKnave),
+    Not(And(BKnight, BKnave)),
+
+)
 # Puzzle 3
 # A says either "I am a knight." or "I am a knave.", but you don't know which.
 # B says "A said 'I am a knave'."
