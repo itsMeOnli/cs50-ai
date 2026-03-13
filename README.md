@@ -66,7 +66,7 @@ cs50-ai/
 
 ## Progress
 
-Progress: 0 / 6 weeks completed
+Progress: 1 / 6 weeks completed
 
 - [x] Week 0 — Search
 - [ ] Week 1 — Knowledge
