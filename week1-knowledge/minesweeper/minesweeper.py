@@ -128,6 +128,10 @@ class Sentence():
         if cell not in self.cells:
             self.cells.add(cell)
             self.count+=1
+        #if in the set
+        else:
+            self.cells.remove(cell)
+            self.count-=1
         return
 
     def mark_safe(self, cell):
@@ -136,7 +140,8 @@ class Sentence():
         a cell is known to be safe.
         """
         #if a cell is a safe then reduce that cell from set since it wont change the count
-        self.cells.remove(cell)
+        if cell in self.cells:
+            self.cells.remove(cell)
         return
 
 
