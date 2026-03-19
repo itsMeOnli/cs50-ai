@@ -199,7 +199,17 @@ class MinesweeperAI():
             5) add any new sentences to the AI's knowledge base
                if they can be inferred from existing knowledge
         """
-        raise NotImplementedError
+        self.moves_made.add(cell)
+        self.mark_safe(cell)
+        self.knowledge.append(Sentence(cell,count))
+        #we can get set of all known safes and all known mines for each sentence
+        #for each known safe we can mark safe for all sentences and for all mines we can mark mine in all sentences
+        for safe in self.safes:
+            for sentence in self.knowledge:
+                sentence.mark_safe(safe)
+        for mine in self.mines:
+            for sentence in self.knowledge:
+                sentence.mark_mine(mine)
 
     def make_safe_move(self):
         """
